@@ -1,0 +1,21 @@
+#!/usr/bin/env perl
+
+use strict;
+use DR;
+use Text::Table;
+
+my $dr = DR->new();
+
+my $projs = $dr->list_projects();
+
+my $tbl = Text::Table->new("ID", "Name", "Filename");
+my @data;
+for my $proj (@$projs)
+{
+    push(@data, [$proj->{id}, $proj->{projectName}, $proj->{fileName}]);
+}
+$tbl->load(@data);
+print $tbl;
+
+
+    

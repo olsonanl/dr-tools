@@ -1,0 +1,35 @@
+#!/usr/bin/env perl
+
+use FindBin;
+use lib "$FindBin::Bin";
+
+use DR;
+
+use strict;
+use warnings;
+
+use Getopt::Long::Descriptive;
+
+my($opt, $usage) = describe_options("%c %o username password",
+				    ["help|h" => "Show this help message"]);
+
+print($usage->text), exit 0 if $opt->help;
+die($usage->text) unless @ARGV == 2;
+
+my $username = shift;
+my $password = shift;
+
+my $dr = DR->new();
+
+my $token = $dr->get_token($username, $password);
+
+if (open(F, ">", $dr->token_path))
+{
+    print F "$token\n";
+    close(F);
+}
+else
+{
+    die "Cannot write token file " . $dr->token_path . ": $!";
+}
+    

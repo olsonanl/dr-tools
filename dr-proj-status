@@ -1,0 +1,21 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use DR;
+
+use Getopt::Long::Descriptive;
+
+my($opt, $usage) = describe_options("%c %o proj-id",
+				    ["help|h" => "Show this help message"]);
+
+print($usage->text), exit 0 if $opt->help;
+die($usage->text) unless @ARGV == 1;
+
+my $proj_id = shift;
+
+my $dr = DR->new();
+my $status = $dr->project_status($proj_id);
+
+print $dr->json->encode($status);
