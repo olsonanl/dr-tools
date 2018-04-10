@@ -1,5 +1,39 @@
 # Datarobot API tools
 
+This repository contains a simple set of tools for dealing with the DataRobot API.
+
+## Dependencies
+
+These tools use a few perl modules that might not be part of a standard build. You should
+be able to load them from CPAN:
+
+   JSON::XS
+   Getopt::Long::Descriptive
+   LWP::Protocol::socks
+
+(the latter is required for SOCKS proxy access; see below).
+
+## Network access
+
+These tools assume access to the IP address space that the server is running in. If
+you wish to use the tools from a network that is outside the firewall, you can 
+use `ssh` to create a SOCKS proxy:
+
+```
+  ssh -D 32000 login.mcs.anl.gov
+```
+
+Leave that command running in a window. You won't need to use it any more.
+
+In the shell where you are going to run the tools, set this environment variable:
+
+```
+  export DR_PROXY=socks://localhost:32000
+```
+
+where the number in the proxy URL matches the port number you provided in the ssh command.
+
+
 ## Command line tools
 
 The DataRobot tools require an authentication token. The `dr-login` script creates

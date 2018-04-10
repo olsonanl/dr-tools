@@ -2,7 +2,7 @@ package DR;
 
 use strict;
 use LWP::UserAgent;
-use JSON;
+use JSON::XS;
 use Data::Dumper;
 
 our $token_path;
