@@ -14,6 +14,7 @@ be able to load them from CPAN:
 
 -  JSON::XS
 -  Getopt::Long::Descriptive
+-  Text::Table
 -  LWP::Protocol::socks
 
 (the latter is required for SOCKS proxy access; see below).
