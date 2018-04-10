@@ -2,6 +2,11 @@
 
 This repository contains a simple set of tools for dealing with the DataRobot API.
 
+## Configuration
+
+The scripts shouldn't require any configuration except to either put the directory containing
+them in your PATH, or invoking them using their full pathname.
+
 ## Dependencies
 
 These tools use a few perl modules that might not be part of a standard build. You should
@@ -19,7 +24,7 @@ package includes the necessary dependencies. It can be downloaded
 
 If you need SOCKS support you will likely need to add that library:
 
-``
+```
   cpanm LWP::Protocol::socks
 ```
 
