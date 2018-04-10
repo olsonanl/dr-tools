@@ -31,11 +31,9 @@ if (!$projname)
 }
 
 my $dr = DR->new();
-my $ua = LWP::UserAgent->new;
-my $token = $ENV{'DR_TOKEN'} or die 'no auth_token';
-my $url = 'http://140.221.10.250/api/v2/projects/';
 
 my $res = $dr->create_project($filename, $projname);
+
 print "Created: $res\n";
 
 

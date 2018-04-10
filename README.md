@@ -49,3 +49,23 @@ You can check the status of a particular project using the `dr-project-status` c
      "autopilotDone" : true
   }
 ```
+
+You can upload data and create a new project using the `dr-create-project` command:
+
+```
+  $ perl dr-create-project x.csv bob-test-5
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-10T21:00:59.637475Z"}
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-10T21:00:59.637475Z"}
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-10T21:00:59.637475Z"}
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-10T21:00:59.637475Z"}
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-10T21:00:59.637475Z"}
+  Check status: http://140.221.10.250/api/v2/status/XX-YY-ZZ-QQ/
+  Status: {"id": "XXXXXXXXXXXXXXXXXX", "projectName": "bob-test-5", "fileName": "x.csv", "stage": "aim", "autopilotMode": null, "created": "2018-04-10T21:01:04.941835Z", "target": null, "metric": null, "partition": {"datetimeCol": null, "cvMethod": null, "validationPct": null, "reps": null, "cvHoldoutLevel": null, "holdoutLevel": null, "userPartitionCol": null, "validationType": null, "trainingLevel": null, "partitionKeyCols": null, "holdoutPct": null, "validationLevel": null}, "recommender": {"recommenderItemId": null, "isRecommender": null, "recommenderUserId": null}, "advancedOptions": {"scaleoutModelingMode": "disabled", "responseCap": null, "downsampledMinorityRows": null, "downsampledMajorityRows": null, "blueprintThreshold": null, "seed": null, "weights": null, "smartDownsampled": false, "majorityDownsamplingRate": null}, "positiveClass": null, "maxTrainPct": null, "holdoutUnlocked": false, "targetType": null}
+  Project ID found: XXXXXXXXXXXXXXXXXX
+  Created: XXXXXXXXXXXXXXXXXX
+```
