@@ -7,11 +7,21 @@ This repository contains a simple set of tools for dealing with the DataRobot AP
 These tools use a few perl modules that might not be part of a standard build. You should
 be able to load them from CPAN:
 
-   JSON::XS
-   Getopt::Long::Descriptive
-   LWP::Protocol::socks
+-  JSON::XS
+-  Getopt::Long::Descriptive
+-  LWP::Protocol::socks
 
 (the latter is required for SOCKS proxy access; see below).
+
+The Perl build that is included in the [PATRIC](https://patricbrc.org) command line interface 
+package includes the necessary dependencies. It can be downloaded 
+[here](https://github.com/PATRIC3/PATRIC-distribution/releases). 
+
+If you need SOCKS support you will likely need to add that library:
+
+``
+  cpanm LWP::Protocol::socks
+```
 
 ## Network access
 
