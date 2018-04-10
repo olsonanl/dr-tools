@@ -4,9 +4,15 @@ use strict;
 use DR;
 use Text::Table;
 
+my $proj_name;
+if (@ARGV)
+{
+    $proj_name = shift;
+}
+
 my $dr = DR->new();
 
-my $projs = $dr->list_projects();
+my $projs = $dr->list_projects($proj_name);
 
 my $tbl = Text::Table->new("ID", "Name", "Filename");
 my @data;

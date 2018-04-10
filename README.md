@@ -38,3 +38,14 @@ with a name matching that parameter:
   XXXXXXXXXXXXXXXXXXXXXXXX ANL Demo 2.0          TRACKTBI_Pilot_DEID_02.22.18v2.2.csv
   XXXXXXXXXXXXXXXXXXXXXXXX ANL Demo 1.0          TRACKTBI_Pilot_DEID_02.22.18v2.2.csv
 ```
+
+You can check the status of a particular project using the `dr-project-status` command:
+
+```
+  $ dr-project-status XXXXXXXXXXXXXXXXXXXXXXXX 
+  {
+     "stage" : "modeling",
+     "stageDescription" : "Ready for modeling",
+     "autopilotDone" : true
+  }
+```
