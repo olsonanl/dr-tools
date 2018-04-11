@@ -1,0 +1,34 @@
+#!/usr/bin/env perl
+
+use strict;
+use Data::Dumper;
+use Text::Table;
+use Getopt::Long::Descriptive;
+
+use DR;
+
+my($opt, $usage) = describe_options("%c %o project-id",
+				    ["help|h" => "Show this help message."]);
+
+print($usage->text), exit 0 if $opt->help;
+die($usage->text) unless @ARGV == 1;
+
+my $proj_id = shift;
+
+my $dr = DR->new();
+
+my $jobs = $dr->list_model_jobs($proj_id);
+die Dumper($jobs);
+__END__
+    
+my $tbl = Text::Table->new("ID", "Name", "Filename");
+my @data;
+for my $proj (@$projs)
+{
+    push(@data, [$proj->{id}, $proj->{projectName}, $proj->{fileName}]);
+}
+$tbl->load(@data);
+print $tbl;
+
+
+    

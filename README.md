@@ -119,3 +119,37 @@ You can upload data and create a new project using the `dr-create-project` comma
   Project ID found: XXXXXXXXXXXXXXXXXX
   Created: XXXXXXXXXXXXXXXXXX
 ```
+
+A model job can be started with the `dr-create-model-job` command. With the `-w` or `--await-completion` flags
+command will repeated query DataRobot to monitor the job's status, exiting when the job is complete
+(or has shown an error).
+
+```
+  bash-3.2$ ./dr-start-model-job -w 5ace55475a28ff195dac32be citrus
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"status": "RUNNING", "message": "", "code": 0, "created": "2018-04-11T18:35:23.974133Z"}
+  Check status: http://140.221.10.250/api/v2/status/e8db6fd6-c69f-4a58-bdfd-4b142c373e2d/
+  Status: {"id": "5ace55475a28ff195dac32be", "projectName": "bob.fruit3", "fileName": "x.csv", "stage": "modeling", "autopilotMode": 0, "created": "2018-04-11T18:34:53.115904Z", "target": "citrus", "metric": "LogLoss", "partition": {"datetimeCol": null, "cvMethod": "stratified", "validationPct": null, "reps": 5, "cvHoldoutLevel": null, "holdoutLevel": null, "userPartitionCol": null, "validationType": "CV", "trainingLevel": null, "partitionKeyCols": null, "holdoutPct": 20.0, "validationLevel": null}, "recommender": {"recommenderItemId": null, "isRecommender": null, "recommenderUserId": null}, "advancedOptions": {"scaleoutModelingMode": "disabled", "responseCap": false, "downsampledMinorityRows": null, "downsampledMajorityRows": null, "blueprintThreshold": null, "seed": null, "weights": null, "smartDownsampled": false, "majorityDownsamplingRate": null}, "positiveClass": 1.0, "maxTrainPct": 63.889, "holdoutUnlocked": false, "targetType": "Binary"}
+```  
+
+The state of model jobs and models may be enumerate with the `dr-list-model-jobs` and `dr-list-models` commands.

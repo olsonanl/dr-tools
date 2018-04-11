@@ -3,6 +3,7 @@ package DR;
 use strict;
 use LWP::UserAgent;
 use JSON::XS;
+use HTTP::Request::Common;
 use Data::Dumper;
 
 our $token_path;
@@ -94,6 +95,101 @@ sub list_projects
     my $doc = $self->request($route);
 
     return $doc;
+}
+
+sub list_model_jobs
+{
+    my($self, $project_id) = @_;
+
+    my $route = "/projects/$project_id/modelJobs/";
+    my $doc = $self->request($route);
+
+    return $doc;
+}
+
+sub list_models
+{
+    my($self, $project_id) = @_;
+
+    my $route = "/projects/$project_id/models/";
+    my $doc = $self->request($route);
+
+    return $doc;
+}
+
+sub start_model_job
+{
+    my($self, $project_id, $target, $params, $await_completion) = @_;
+
+    my $route = $self->url . "/projects/$project_id/aim/";
+    my $req_data = {
+	target => $target,
+    };
+    if (ref($params) eq 'HASH')
+    {
+	$req_data->{$_} = $params->{$_} foreach keys %$params;
+    }
+    my $req = HTTP::Request::Common::POST($route,
+					  Authorization => "Token " . $self->token,
+					  Content_Type => 'application/json',
+					  Content => $self->json->encode($req_data));
+    $req->method("PATCH");
+    my $res = $self->ua->request($req);
+    
+    if (!$res->is_success)
+    {
+	die "Request failed to $route: " . $res->content;
+    }
+
+    my $status_url = $res->header("location");
+
+    while (1)
+    {
+	print "Check status: $status_url\n";
+
+	my $stat = $self->ua->get($status_url,
+				  Authorization => "Token " . $self->token);
+
+	if ($stat->is_redirect)
+	{
+	    my $new = $res->header("location");
+	    print "Job complete new=$new\n";
+	    return $new;
+	}
+	   
+	if (!$stat->is_success)
+	{
+	    die "Status request failed for $status_url: " . $res->code . " " . $res->content;
+	}
+
+	my $txt = $stat->content;
+	my $doc = $self->json->decode($txt);
+
+	print "Status: $txt\n";
+
+	if ($doc->{status} eq 'RUNNING')
+	{
+	    if (!$await_completion)
+	    {
+		print "Job running\n";
+		return $status_url;
+	    }
+	}
+	else
+	{
+	    return $status_url;
+	}
+
+
+	# if ($doc->{id})
+	# {
+	#     print "Project ID found: $doc->{id}\n";
+	#     return $doc->{id};
+	# }
+	sleep 1;
+    }
+    return undef;
+
 }
 
 sub request
