@@ -14,12 +14,16 @@ my $dr = DR->new();
 
 my $projs = $dr->list_projects($proj_name);
 
-my $tbl = Text::Table->new("ID", "Name", "Filename");
+my $tbl = Text::Table->new("ID", "Name", "Created", "Filename");
+
 my @data;
+my @fields;
 for my $proj (@$projs)
 {
-    push(@data, [$proj->{id}, $proj->{projectName}, $proj->{fileName}]);
+    push(@data, [$proj->{id}, $proj->{projectName}, $proj->{created}, $proj->{fileName}]);
+    @fields = keys %$proj;
 }
+# print STDERR join "\n", @fields;
 $tbl->load(@data);
 print $tbl;
 

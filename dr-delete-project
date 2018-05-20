@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use File::Basename;
+
+use FindBin;
+use lib "$FindBin::Bin";
+
+use DR;
+use Getopt::Long::Descriptive;
+
+my($opt, $usage) = describe_options("%c %o project-id",
+				    ["help|h" => "Show this help message"]);
+
+print($usage->text), exit 0 if $opt->help;
+die($usage->text) unless @ARGV == 1;
+
+my $proj_id = shift;
+
+my $dr = DR->new();
+
+my $res = $dr->delete_project($proj_id);
+
+print "Deleted: $proj_id\n";

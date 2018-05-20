@@ -1,0 +1,19 @@
+#!/usr/bin/env perl
+
+use base 'Class::Accessor';
+use Data::Dumper;
+use DR;
+use File::Basename;
+use FindBin;
+use Getopt::Long::Descriptive;
+use HTTP::Request::Common;
+use JSON::XS;
+use lib "$FindBin::Bin";
+use LWP::UserAgent;
+use Text::Table;
+
+# sudo cpan install Bundle::LWP
+# sudo cpan install JSON::XS
+# sudo cpan install JSON
+# sudo cpan install Getopt::Long::Descriptive
+# sudo cpan install Text::Table

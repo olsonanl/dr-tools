@@ -19,12 +19,21 @@ my $dr = DR->new();
 
 my $models = $dr->list_models($proj_id);
     
-my $tbl = Text::Table->new("ID", "Model type", "Sample %");
+my $tbl = Text::Table->new("ID", "Model type", "Sample %", "AUC");
 my @data;
+my (@fields, @metrics, @metrics_AUC);
+
 for my $model (@$models)
 {
-    push(@data, [$model->{id}, $model->{modelType}, $model->{samplePct}]);
+    push(@data, [$model->{id}, $model->{modelType}, $model->{samplePct}, $model->{metrics}->{AUC}->{validation}]);
+    @fields = keys %$model;
+    @metrics=keys %{$model->{metrics}};
+    @metrics_AUC=keys %{$model->{metrics}->{AUC}};
+
 }
+# print STDERR join "\n", @fields;
+# print STDERR join "\n", @metrics;
+# print STDERR join "\n", @metrics_AUC;
 $tbl->load(@data);
 print $tbl;
 
