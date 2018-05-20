@@ -259,7 +259,6 @@ sub delete_project
     my ($self, $proj_id) = @_;
     my $route = $self->url . '/projects/' . $proj_id . '/';
 
-	print $self->token, "\n";
     my $res = $self->ua->delete($route,
 			Authorization => "Token " . $self->token);
 
