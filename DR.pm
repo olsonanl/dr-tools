@@ -26,7 +26,7 @@ sub new
     my $self = {
 	ua => LWP::UserAgent->new,
 	json => JSON::XS->new->allow_nonref->pretty(1),
-	url => 'http://140.221.10.250/api/v2',
+	url => 'https://datarobot.cels.anl.gov/api/v2',
     };
 
     bless $self, $class;
