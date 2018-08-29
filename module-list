@@ -11,6 +11,7 @@ use JSON::XS;
 use lib "$FindBin::Bin";
 use LWP::UserAgent;
 use Text::Table;
+use Mozilla::CA;
 
 # sudo cpan install Bundle::LWP
 # sudo cpan install JSON::XS
