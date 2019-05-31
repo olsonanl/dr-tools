@@ -14,11 +14,20 @@ my($opt, $usage) = describe_options("%c %o username password",
 				    ["help|h" => "Show this help message"]);
 
 print($usage->text), exit 0 if $opt->help;
-die($usage->text) unless @ARGV == 2;
+die($usage->text) unless @ARGV == 1;
 
 my $username = shift;
 my $password = shift;
 
+if (!defined $password) {
+  use Term::ReadKey;
+  print "Enter your password: ";
+  ReadMode 'noecho';
+  $password = ReadLine 0;
+  chomp $password;
+  ReadMode 'normal';
+  print "\n";
+}
 my $dr = DR->new();
 
 my $token = $dr->get_token($username, $password);
