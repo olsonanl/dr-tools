@@ -1,0 +1,38 @@
+#!/usr/bin/env perl
+
+use strict;
+use Data::Dumper;
+use Text::Table;
+use Getopt::Long::Descriptive;
+
+use DR;
+
+my($opt, $usage) = describe_options("%c %o project-id",
+				    ["help|h" => "Show this help message."],
+				    ["verbose|v" => "Verbose output"],
+				   );
+
+print($usage->text), exit 0 if $opt->help;
+die($usage->text) unless @ARGV == 1;
+
+my $proj_id = shift;
+
+my $dr = DR->new();
+
+my $models = $dr->list_models($proj_id);
+    
+my $tbl = Text::Table->new("ID", "Model type", "Sample %", "AUC");
+my @data;
+my (@fields, @metrics, @metrics_AUC);
+
+for my $model (@$models)
+{
+    push(@data, [$model->{id}, $model->{modelType}, $model->{samplePct}, $model->{metrics}->{AUC}->{validation}]);
+    @fields = keys %$model;
+    @metrics=keys %{$model->{metrics}};
+    @metrics_AUC=keys %{$model->{metrics}->{AUC}};
+}
+my @sorted = sort { $b->[2] <=> $a->[2] } @data; 
+$tbl->load(@sorted);
+print $tbl if $opt->verbose;
+print $sorted[0][0], "\n";  
