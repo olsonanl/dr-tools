@@ -35,4 +35,4 @@ for my $model (@$models)
 my @sorted = sort { $b->[2] <=> $a->[2] } @data; 
 $tbl->load(@sorted);
 print $tbl if $opt->verbose;
-print $sorted[0][0], "\n";  
+print join ("\t", @{$sorted[0]}) , "\n";;  
