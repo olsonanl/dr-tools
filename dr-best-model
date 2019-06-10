@@ -9,30 +9,54 @@ use DR;
 
 my($opt, $usage) = describe_options("%c %o project-id",
 				    ["help|h" => "Show this help message."],
-				    ["verbose|v" => "Verbose output"],
+				    ["verbose|v" => "Print verbose output."],
+				    ["metric|m=s" => "Metric to use.", { default => "AUC" }],
 				   );
 
-print($usage->text), exit 0 if $opt->help;
+print("\n", $usage->text, "\nList the model with the best AUC\n\n"), exit 0 if $opt->help;
 die($usage->text) unless @ARGV == 1;
+
+
+# Deal with whitespace in data robot metric keys
+my $metric = $opt->metric;
+$metric = "R Squared" if $metric eq "R2";
+print STDERR "using metric: ", $metric, "\n" if $opt->verbose;
 
 my $proj_id = shift;
 
 my $dr = DR->new();
 
 my $models = $dr->list_models($proj_id);
-    
-my $tbl = Text::Table->new("ID", "Model type", "Sample %", "AUC");
+ 
+my $tbl = Text::Table->new("ID", "Model type", $metric);
 my @data;
 my (@fields, @metrics, @metrics_AUC);
 
 for my $model (@$models)
 {
-    push(@data, [$model->{id}, $model->{modelType}, $model->{samplePct}, $model->{metrics}->{AUC}->{validation}]);
-    @fields = keys %$model;
-    @metrics=keys %{$model->{metrics}};
-    @metrics_AUC=keys %{$model->{metrics}->{AUC}};
+
+    if( ! defined $model->{metrics}->{$metric}->{validation} ) {
+	die "validation $metric is not defined, currently supported are AUC and R2";
+    }
+
+    push(@data, [$model->{id},
+		 $model->{modelType},
+                 $model->{metrics}->{$metric}->{validation},
+		]
+	);
 }
-my @sorted = sort { $b->[2] <=> $a->[2] } @data; 
+
+# for largest metric
+my @sorted = ();
+if ($metric eq "R Squared" or $metric eq "AUC") {
+    @sorted = sort { $b->[2] <=> $a->[2] } @data; 
+}
+if ($metric eq "RMSE" or $metric eq "MAE") {
+    @sorted = sort { $a->[2] <=> $b->[2] } @data;
+}
+
+
 $tbl->load(@sorted);
-print $tbl if $opt->verbose;
+print STDERR $tbl if $opt->verbose;
+
 print join ("\t", @{$sorted[0]}) , "\n";;  
