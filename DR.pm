@@ -117,6 +117,44 @@ sub list_models
     return $doc;
 }
 
+sub create_feature_impact
+{
+    my ($self, $project_id, $model_id) = @_;
+
+    # POST /api/v2/projects/(projectId)/models/modelId/featureImpact/
+    # Status Codes
+    #   202 Accepted – the feature impact request has be successfully submitted
+
+    my $route = "projects/$project_id/models/$model_id/featureImpact/";
+
+    my $req = HTTP::Request::Common::POST($route,
+                                          Authorization => "Token " . $self->token,
+                                          Content_Type => 'application/json');
+
+    my $res = $self->ua->request($req);
+    if (!$res->is_success)
+    {
+        die "Request failed to $route: " . $res->content;
+    }
+
+   # Response Headers
+   # Location – contains a url at which the job for
+   #   calculating feature impact can be retrieved as
+   #   with GET /api/v2/projects/(projectId)/jobs/(jobId)/.
+}
+
+sub retreive_feature_impact
+{
+    #  projectId – the project that contains the requested model
+    #  modelId – the model to retrieve feature impact for
+
+    my ($self, $project_id, $model_id) = @_;
+
+    my $route = "/projects/$project_id/models/$model_id/featureImpact";
+    my $doc = $self->request($route);
+
+    return $doc;
+}
 sub start_model_job
 {
     my($self, $project_id, $target, $params, $await_completion) = @_;
