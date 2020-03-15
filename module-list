@@ -12,9 +12,12 @@ use lib "$FindBin::Bin";
 use LWP::UserAgent;
 use Text::Table;
 use Mozilla::CA;
+use Term::ReadKey;
 
 # sudo cpan install Bundle::LWP
 # sudo cpan install JSON::XS
 # sudo cpan install JSON
 # sudo cpan install Getopt::Long::Descriptive
 # sudo cpan install Text::Table
+# sudo cpan install Term::ReadKey
+# sudo cpan install Mozilla::CA
