@@ -4,20 +4,31 @@ This repository contains a simple set of tools for dealing with the DataRobot AP
 
 ## Configuration
 
-The scripts shouldn't require any configuration except to either put the directory containing
-them in your PATH, or invoking them using their full pathname.
+You will need to let perl know where the DR.pm library is.
+You will need to put the directory containing the scripts in your PATH, or invoking them using their full pathname.
+
+export PERL5LIB=<path to dr-tools>
+export PATH=$PATH:<path to dr-tools>
+
+export PERL5LIB=/vol/ml/brettin/dr-tools
+export PATH=$PATH:/vol/ml/brettin/dr-tools
+
+
 
 ## Dependencies
 
 These tools use a few perl modules that might not be part of a standard build. You should
-be able to load them from CPAN:
+be able to load them from CPAN.
 
--  JSON::XS
--  Getopt::Long::Descriptive
--  Text::Table
+The most current cpan module depencancies can be found in the modules-list file along with cpan commands to install them. The module-list file can also be used to test to see if you have the necessary modules installed
+
+```
+    perl module-list
+```
+
+
 -  LWP::Protocol::socks
-
-(the latter is required for SOCKS proxy access; see below).
+(is required for SOCKS proxy access; see below).
 
 The Perl build that is included in the [PATRIC](https://patricbrc.org) command line interface 
 package includes the necessary dependencies. It can be downloaded 
